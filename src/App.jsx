@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import './App.css';
 import React from 'react';
-import { addText } from './function';
+import { addText, resetCanva } from './function';
 import { SketchPicker } from 'react-color';
 
 
 function App() {
-
+    const handleColorChange = ({ hex }) => console.log(hex);
     return (
 
         <div className="mr-20 ml-20 mb-20 h-screen overflow-auto">
@@ -15,13 +15,24 @@ function App() {
             </div>
 
             {/* Tools */}
-            <div className='flex justify-center items-center h-5/6'>
-                <div id='canvas' className="bg-white mr-4 w-3/6 h-full border-8"></div>
+            <div className='flex justify-center items-center h-5/6 gap-5'>
+                <div className='relative w-3/6 h-full'>
+                    <div id='canvas' className="flex bg-white mr-4 w-full h-5/6 border-8"></div>
+                    <div className='canva-button absolute bottom-0 left-0'>
+                        <img className="hover: cursor-pointer" width="80px" height="80px" src='../public/undo.png' alt="undo"></img>
+                    </div>
+                    <div className='canva-button absolute bottom-0 right-0'>
+                        <img className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
+                    </div>
+                </div>
+                
                 <div className="border-8 bg-white w-2/6 h-full grid grid-cols-6">
-                    <div className='ml-5 col-span-3 flex justify-center items-center'>
+                    <div id="colorPicker" className='ml-5 col-span-3 flex justify-center items-center'>
                         <SketchPicker
                             presetColors={[]}
-                            className='colorSelect'
+                            id=""
+                            color={0x100000}
+                            onChangeComplete={handleColorChange}
                         />
                     </div>
                     <div className='col-span-3 flex flex-col justify-center gap-2 mx-10'>
@@ -41,7 +52,7 @@ function App() {
                         <form className="max-w-sm mt-1">
                             <select id="fontType" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
                                 <option defaultValue="Arial">Arial</option>
-                                <option value="Helvetica">Helvetica</option>
+                                <option value="skranji">Skranji</option>
                                 <option value="Times New Roman">Times New Roman</option>
                                 <option value="Verdana">Verdana</option>
                             </select>
@@ -57,20 +68,23 @@ function App() {
                     <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => addText()} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/cut.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/glue-stick.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/files.png' width="80" height="80" alt="eraser"></img>
-                    </div>
                     <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/rectangle.png' width="80" height="80" alt="eraser"></img>
+                    </div>
+                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/triangle.png' width="80" height="80" alt="eraser"></img>
+                    </div>
+                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/download.png' width="80" height="80" alt="eraser"></img>
+                    </div>
+                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                        <img onClick={() => resetCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/reset.png' width="80" height="80" alt="eraser"></img>
+                    </div>
+                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/upload.png' width="80" height="80" alt="eraser"></img>
                     </div>
                 </div>
             </div>
