@@ -1,9 +1,23 @@
 import React from 'react';
 import { SketchPicker } from 'react-color';
+import { useState } from 'react';
 
-class Component extends React.Component {
+export function ColorSelect({ onColorChange }) {
+    const [pickedColor, setPickedColor] = useState('#000000');
 
-  render() {
-    return <SketchPicker />;
-  }
+    const handleColorChange = (color) => {
+        setPickedColor(color.hex); 
+        onColorChange(color.hex);
+    };
+
+    return (
+        <div>
+            <SketchPicker
+                presetColors={[]}
+                width='180px'
+                color={pickedColor}
+                onChangeComplete={handleColorChange}
+            />
+        </div>
+    );
 }

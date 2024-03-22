@@ -2,16 +2,20 @@ import { useState } from 'react';
 import './App.css';
 import React from 'react';
 import { addText, resetCanva } from './function';
+// import { ColorSelect } from './components/colorSelect';
 import { SketchPicker } from 'react-color';
 
-
 function App() {
-    const handleColorChange = ({ hex }) => console.log(hex);
+    const [pickedColor, setPickedColor] = useState('#000000');
+    const handleColorChange = (color) => {
+        setPickedColor(color.hex);
+    };
+
     return (
 
         <div className="mr-20 ml-20 mb-20 h-screen overflow-auto">
             <div className='flex justify-center'>
-                <p className='flex items-center font-bold text-4xl text-cyan-50 mt-5 mb-5'>Web Canva</p>
+                <p className='yeseva-one-regular flex items-center font-bold text-6xl text-cyan-50 mt-5 mb-5'>Web Canva</p>
             </div>
 
             {/* Tools */}
@@ -25,19 +29,20 @@ function App() {
                         <img className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
                     </div>
                 </div>
-                
+
                 <div className="border-8 bg-white w-2/6 h-full grid grid-cols-6">
                     <div id="colorPicker" className='ml-5 col-span-3 flex justify-center items-center'>
+                        {/* <ColorSelect id="colorSelect" onColorChange={handleColorChange}/> */}
                         <SketchPicker
                             presetColors={[]}
-                            id=""
-                            color={0x100000}
+                            width='180px'
+                            color={pickedColor}
                             onChangeComplete={handleColorChange}
                         />
                     </div>
-                    <div className='col-span-3 flex flex-col justify-center gap-2 mx-10'>
 
-                        <p className='font-bold'>Font Size:</p>
+                    <div className='col-span-3 flex flex-col justify-center gap-2 mx-10'>
+                        <p className='yeseva-one-regular text-lg font-bold'>Font Size:</p>
                         <form className="max-w-sm mt-1">
                             <select id="fontSize" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
                                 <option defaultValue="8">8</option>
@@ -48,7 +53,7 @@ function App() {
                                 <option value="24">24</option>
                             </select>
                         </form>
-                        <p className='font-bold'>Font Type:</p>
+                        <p className='yeseva-one-regular text-lg font-bold'>Font Type:</p>
                         <form className="max-w-sm mt-1">
                             <select id="fontType" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
                                 <option defaultValue="Arial">Arial</option>
@@ -66,24 +71,24 @@ function App() {
                         <img className='hover:bg-sky-100 cursor-pointer' src='../public/eraser.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => addText()} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => addText(pickedColor)} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                    <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                    <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/rectangle.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                    <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/triangle.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                    <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/download.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                    <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => resetCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/reset.png' width="80" height="80" alt="eraser"></img>
                     </div>
-                    <div className='col-span-2 flex justify-center items-center' onClick={() => console.log("hello")}>
+                    <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/upload.png' width="80" height="80" alt="eraser"></img>
                     </div>
                 </div>

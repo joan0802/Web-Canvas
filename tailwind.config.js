@@ -6,7 +6,7 @@ export default {
     ],
     theme: {
         extend: {
-            fontFamily: { 'skranji': ['Skranji', 'cursive'] }
+            fontFamily: { 'skranji': ['Skranji', 'cursive'], 'Yeseva One': ['Yeseva One', 'serif'] },
         },
     },
     plugins: [],

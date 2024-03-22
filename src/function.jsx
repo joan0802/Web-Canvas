@@ -1,5 +1,5 @@
 import React from 'react';
-import { SketchPicker } from 'react-color';
+import { useState } from 'react';
 
 export function getMousePos(evt) {
     var pos = document.getElementById("canvas").getBoundingClientRect();
@@ -9,12 +9,12 @@ export function getMousePos(evt) {
     };
 }
 
-export function addText() {
-    console.log("add text box");
+export function addText(color) {
+    // console.log("add text box");
     document.getElementById("canvas").style.cursor = "text";
     document.getElementById("canvas").addEventListener("click", handleClick);
     function handleClick(evt) {
-        console.log("click again");
+        // console.log("click again");
         document.getElementById("canvas").style.cursor = "auto";
 
         const mousePos = getMousePos(evt);
@@ -26,7 +26,7 @@ export function addText() {
         textBox.style.width = "80px";
         textBox.style.fontSize = document.getElementById("fontSize").value + "px";
         textBox.style.fontFamily = document.getElementById("fontType").value;
-        textBox.style.color = document.getElementById("colorPicker").color;
+        textBox.style.color = color;
 
         document.getElementById("canvas").appendChild(textBox);
         textBox.focus();
