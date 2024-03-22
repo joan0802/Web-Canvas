@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .canva {
-  height: 100px;
-  width: 100px;
-  background-color: white;
-} */
+.h-screen {
+  height: 90vh !important;
+}
+.border-8 {
+  position: relative;
+  border-width: 3px;
+  border-color: #c1cbdf;
+  border-radius: 6px;
+}
