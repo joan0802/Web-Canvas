@@ -28,6 +28,10 @@ function App() {
         changeCursor("eraser");
         setTool("eraser");
     }
+    const handleShape= (shape) => {
+        changeCursor(shape);
+        setTool(shape);
+    }
 
 
     return (
@@ -43,7 +47,7 @@ function App() {
                         <canvas 
                             id='paint' 
                             className="w-full h-5/6 flex bg-white border-8"
-                            width="500"
+                            width="600"
                             height="500"
                         >
                         </canvas>
@@ -103,13 +107,13 @@ function App() {
                         <img onClick={() => handleText(pickedColor)} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => handleShape("circle")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/rectangle.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => handleShape("rectangle")} className='hover:bg-sky-100 cursor-pointer' src='../public/rectangle.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/triangle.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => handleShape("triangle")} className='hover:bg-sky-100 cursor-pointer' src='../public/triangle.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => downloadCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/download.png' width="80" height="80" alt="eraser"></img>

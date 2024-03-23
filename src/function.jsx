@@ -37,7 +37,7 @@ export function addText() {
     const canva = document.getElementById("paint");
     const ctx = canva.getContext("2d");
     canva.style.cursor = "text";
-    canva.addEventListener("click",(e) => handleClick(e));
+    canva.addEventListener("click", (e) => handleClick(e));
     function handleClick(e) {
         // console.log("click again");
         const outer = document.getElementById("outer-canva");
@@ -62,43 +62,41 @@ export function resetCanva() {
 }
 
 export function readyToDraw() {
-    if (tool == "pencil") {
-        var canva = document.getElementById("paint");
-        var ctx = canva.getContext("2d");
-        // canva.addEventListener("mousedown", (e) => drawing(e, color));
-        canva.addEventListener('mousedown', (e) => {
-            isDrawing = true;
-        });
+    // if (tool == "pencil") {
+    var canva = document.getElementById("paint");
+    var ctx = canva.getContext("2d");
+    // canva.addEventListener("mousedown", (e) => drawing(e, color));
+    canva.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+    });
 
-        canva.addEventListener('mouseup', e => {
-            isDrawing = false;
-            var rect = canva.getBoundingClientRect();
-            ctx.stroke();
-            ctx.beginPath();
-            
-            // ctx.moveTo(e.clientX , e.clientY);
-            e.preventDefault();
-        });
+    canva.addEventListener('mouseup', e => {
+        isDrawing = false;
+        var rect = canva.getBoundingClientRect();
+        ctx.stroke();
+        ctx.beginPath();
 
-        canva.addEventListener('mousemove', (e) => {
-            if (!isDrawing) return;
+        e.preventDefault();
+    });
 
-            var rect = canva.getBoundingClientRect();
+    canva.addEventListener('mousemove', (e) => {
+        if (!isDrawing) return;
 
+        const bSize = document.getElementById("brushSize").value;
+        // const rect = canva.getBoundingClientRect();
+        if(tool == "pencil") {
             ctx.strokeStyle = pickedColor;
             ctx.fillStyle = pickedColor;
-            ctx.lineWidth = document.getElementById("brushSize").value;
+            ctx.lineWidth = bSize;
             ctx.lineCap = "round";
-            ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY-canva.offsetTop);
+            ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY);
             ctx.stroke();
-
-        });
-    }
-    else if (tool == "eraser") {
-
-    }
-    else
-        return;
+        }
+        else if(tool == "eraser") {
+            ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY, bSize, bSize);
+            
+        }
+    });
 }
 
 export function downloadCanva() {
