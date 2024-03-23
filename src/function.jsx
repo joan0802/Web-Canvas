@@ -2,8 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 
 var isDrawing = false;
+var pickedColor = '#000000';
 var tool;
-// const [tool, setTool] = useState("0");var mouse_x=0;
+
+export function changeColor(color) {
+    pickedColor = color;
+}
 
 export function changeCursor(type) {
     // setTool(type);
@@ -28,30 +32,21 @@ export function changeCursor(type) {
     console.log("tool = " + tool);
 }
 
-export function getMousePos(evt) {
-    var pos = document.getElementById("paint").getBoundingClientRect();
-    return {
-        x: evt.clientX - pos.left,
-        y: evt.clientY - pos.top
-    };
-}
-
-export function addText(color) {
+export function addText() {
     // console.log("add text box");
     const canva = document.getElementById("paint");
     const ctx = canva.getContext("2d");
     canva.style.cursor = "text";
-    canva.addEventListener("click", handleClick);
-    function handleClick(evt) {
+    canva.addEventListener("click",(e) => handleClick(e));
+    function handleClick(e) {
         // console.log("click again");
         const outer = document.getElementById("outer-canva");
         canva.style.cursor = "auto";
-        const mousePos = getMousePos(evt);
         const input = document.createElement("input");
-        
-        ctx.fillStyle = color;
+
+        ctx.fillStyle = pickedColor;
         ctx.font = "bold 18px Arial";
-        ctx.fillText("Text", 30, 80);
+        ctx.fillText("Text", e.offsetX, e.offsetY);
         canva.removeEventListener("click", handleClick);
     }
     canva.style.cursor = "text";
@@ -66,36 +61,52 @@ export function resetCanva() {
     console.log("reset");
 }
 
-export function readyToDraw(color) {
-    if(tool == "pencil") {
+export function readyToDraw() {
+    if (tool == "pencil") {
         var canva = document.getElementById("paint");
-        console.log("drawing func");
-        canva.addEventListener("mousedown", (e) => {
-            canva.addEventListener("mousemove", () => drawing(e, color));
+        var ctx = canva.getContext("2d");
+        // canva.addEventListener("mousedown", (e) => drawing(e, color));
+        canva.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+        });
+
+        canva.addEventListener('mouseup', e => {
+            isDrawing = false;
+            var rect = canva.getBoundingClientRect();
+            ctx.stroke();
+            ctx.beginPath();
+            
+            // ctx.moveTo(e.clientX , e.clientY);
+            e.preventDefault();
+        });
+
+        canva.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+
+            var rect = canva.getBoundingClientRect();
+
+            ctx.strokeStyle = pickedColor;
+            ctx.fillStyle = pickedColor;
+            ctx.lineWidth = document.getElementById("brushSize").value;
+            ctx.lineCap = "round";
+            ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY-canva.offsetTop);
+            ctx.stroke();
+
         });
     }
-    else if(tool == "eraser") {
+    else if (tool == "eraser") {
 
     }
     else
         return;
 }
 
-function drawing(e, color) {
-    // console.log("drawing");
-    const mousePos = getMousePos(e);
-    const canva = document.getElementById('paint');
-    const ctx = canva.getContext('2d');
-    ctx.strokeStyle = color;
-    ctx.lineWidth = "5px";
-    ctx.lineCap = "round";
-    ctx.lineTo(0, 0);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(getMousePos.x, getMousePos.y);
-    document.getElementById("paint").addEventListener("mouseup", () => {
-        isDrawing = false;
-        ctx.closePath();
-        document.getElementById("paint").removeEventListener("mousemove", readyToDraw(color));
-    });
+export function downloadCanva() {
+    const image = document.getElementById("paint").toDataURL();
+    const d = document.createElement('a');
+    d.download = 'canvas_image.png';
+    d.href = image;
+    d.click();
+
+    console.log("download")
 }

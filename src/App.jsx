@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import React from 'react';
-import { addText, resetCanva, readyToDraw, changeCursor } from './function';
+import { addText, resetCanva, readyToDraw, changeCursor, changeColor, downloadCanva } from './function';
 import { SketchPicker } from 'react-color';
 
 function App() {
@@ -11,16 +11,17 @@ function App() {
 
     const handleColorChange = (color) => {
         setPickedColor(color.hex);
+        changeColor(color.hex);
     };
     const handleText = (color) => {
         changeCursor("text");
         addText(color);
         setTool("text");
     }
-    const handleDrawing = (color) => {
+    const handleDrawing = () => {
         // document.getElementById("paint").style.cursor = "url('pencil.cur'), auto";
         changeCursor("pencil");
-        readyToDraw(color);
+        readyToDraw();
         setTool("pencil");
     }
     const handleErasing = () => {
@@ -42,6 +43,8 @@ function App() {
                         <canvas 
                             id='paint' 
                             className="w-full h-5/6 flex bg-white border-8"
+                            width="500"
+                            height="500"
                         >
                         </canvas>
                     <div className='absolute bottom-0 left-0'>
@@ -65,7 +68,7 @@ function App() {
 
                     <div className='col-span-3 flex flex-col justify-center gap-2 mx-10'>
                         <p className='yeseva-one-regular text-lg font-bold'>Font Size:</p>
-                        <form className="max-w-sm mt-1">
+                        <form className="max-w-sm">
                             <select id="fontSize" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
                                 <option defaultValue="8">8</option>
                                 <option value="10">10</option>
@@ -76,7 +79,7 @@ function App() {
                             </select>
                         </form>
                         <p className='yeseva-one-regular text-lg font-bold'>Font Type:</p>
-                        <form className="max-w-sm mt-1">
+                        <form className="max-w-sm">
                             <select id="fontType" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
                                 <option defaultValue="Arial">Arial</option>
                                 <option value="skranji">Skranji</option>
@@ -84,6 +87,8 @@ function App() {
                                 <option value="Verdana">Verdana</option>
                             </select>
                         </form>
+                        <p className='yeseva-one-regular text-lg font-bold'>Brush Size:</p>
+                        <input id="brushSize" type='range' min="1" max="50" defaultValue="5" className='bg-black'></input>
                     </div>
 
                     <div className='col-span-2 flex justify-center items-center'>
@@ -107,7 +112,7 @@ function App() {
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/triangle.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/download.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => downloadCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/download.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => resetCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/reset.png' width="80" height="80" alt="eraser"></img>
