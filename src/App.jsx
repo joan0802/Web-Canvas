@@ -1,15 +1,33 @@
 import { useState } from 'react';
 import './App.css';
 import React from 'react';
-import { addText, resetCanva } from './function';
-// import { ColorSelect } from './components/colorSelect';
+import { addText, resetCanva, readyToDraw, changeCursor } from './function';
 import { SketchPicker } from 'react-color';
 
 function App() {
     const [pickedColor, setPickedColor] = useState('#000000');
+    const [textHidden, setTextHidden] = useState(true);
+    const [tool, setTool] = useState("auto");
+
     const handleColorChange = (color) => {
         setPickedColor(color.hex);
     };
+    const handleText = (color) => {
+        changeCursor("text");
+        addText(color);
+        setTool("text");
+    }
+    const handleDrawing = (color) => {
+        // document.getElementById("paint").style.cursor = "url('pencil.cur'), auto";
+        changeCursor("pencil");
+        readyToDraw(color);
+        setTool("pencil");
+    }
+    const handleErasing = () => {
+        changeCursor("eraser");
+        setTool("eraser");
+    }
+
 
     return (
 
@@ -21,11 +39,15 @@ function App() {
             {/* Tools */}
             <div className='flex justify-center items-center h-5/6 gap-5'>
                 <div className='relative w-3/6 h-full'>
-                    <div id='canvas' className="flex bg-white mr-4 w-full h-5/6 border-8"></div>
-                    <div className='canva-button absolute bottom-0 left-0'>
-                        <img className="hover: cursor-pointer" width="80px" height="80px" src='../public/undo.png' alt="undo"></img>
+                        <canvas 
+                            id='paint' 
+                            className="w-full h-5/6 flex bg-white border-8"
+                        >
+                        </canvas>
+                    <div className='absolute bottom-0 left-0'>
+                        <img className="hover: cursor-pointer" width="80px" height="80px" src='undo.png' alt="undo"></img>
                     </div>
-                    <div className='canva-button absolute bottom-0 right-0'>
+                    <div className='absolute bottom-0 right-0'>
                         <img className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
                     </div>
                 </div>
@@ -65,13 +87,15 @@ function App() {
                     </div>
 
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/pencil.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => {handleDrawing(pickedColor);}} className='hover:bg-sky-100 cursor-pointer' src='../public/pencil.png' width="80" height="80" alt="eraser">
+                        </img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img className='hover:bg-sky-100 cursor-pointer' src='../public/eraser.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => handleErasing()} className='hover:bg-sky-100 cursor-pointer' src='../public/eraser.png' width="80" height="80" alt="eraser">
+                        </img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => addText(pickedColor)} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => handleText(pickedColor)} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
