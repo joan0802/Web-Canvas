@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import React from 'react';
-import { addText, resetCanva, readyToDraw, changeCursor, changeColor, downloadCanva } from './function';
+import { addText, resetCanva, readyToDraw, changeCursor, changeColor, downloadCanva, undo, redo } from './function';
 import { SketchPicker } from 'react-color';
 
 function App() {
@@ -21,7 +21,6 @@ function App() {
     const handleDrawing = () => {
         // document.getElementById("paint").style.cursor = "url('pencil.cur'), auto";
         changeCursor("pencil");
-        readyToDraw();
         setTool("pencil");
     }
     const handleErasing = () => {
@@ -38,7 +37,7 @@ function App() {
 
         <div className="mr-20 ml-20 mb-20 h-screen overflow-auto">
             <div className='flex justify-center'>
-                <p className='yeseva-one-regular flex items-center font-bold text-6xl text-cyan-50 mt-5 mb-5'>Web Canva</p>
+                <p className='yeseva-one-regular text-sky-100 flex items-center font-bold text-6xl mt-5 mb-5 rounded-lg'>Web Canva</p>
             </div>
 
             {/* Tools */}
@@ -52,10 +51,10 @@ function App() {
                         >
                         </canvas>
                     <div className='absolute bottom-0 left-0'>
-                        <img className="hover: cursor-pointer" width="80px" height="80px" src='undo.png' alt="undo"></img>
+                        <img onClick={() => undo()} className="hover: cursor-pointer" width="80px" height="80px" src='undo.png' alt="undo"></img>
                     </div>
                     <div className='absolute bottom-0 right-0'>
-                        <img className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
+                        <img onClick={() => redo()} className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
                     </div>
                 </div>
 
@@ -70,7 +69,7 @@ function App() {
                         />
                     </div>
 
-                    <div className='col-span-3 flex flex-col justify-center gap-2 mx-10'>
+                    <div className='col-span-3 flex flex-col justify-center gap-2 mx-10 my-5 rounded-md'>
                         <p className='yeseva-one-regular text-lg font-bold'>Font Size:</p>
                         <form className="max-w-sm">
                             <select id="fontSize" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
