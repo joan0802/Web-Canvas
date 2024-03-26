@@ -14,6 +14,8 @@ window.onload = function () {
 
 function initApp() {
     const canva = document.getElementById("paint");
+    const upload = document.getElementById("uploadFile");
+    upload.addEventListener("change", (e) => handleUpload(e));
 
     var img = new Image();
     img.src = canva.toDataURL();
@@ -90,12 +92,11 @@ export function readyToDraw() {
 
     const onMouseUp = (e) => {
         isDrawing = false;
-        var rect = canva.getBoundingClientRect();
         ctx.stroke();
         ctx.beginPath();
         e.preventDefault();
 
-        while(step < undoArray.length - 1) {
+        while (step < undoArray.length - 1) {
             undoArray.pop();
         }
         var img = new Image();
@@ -119,12 +120,12 @@ export function readyToDraw() {
             ctx.stroke();
         }
         else if (tool == "eraser") {
-            ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop, bSize*1.3, bSize*1.3);
+            ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop, bSize * 1.3, bSize * 1.3);
 
         }
     };
 
-    if(!isListen) {
+    if (!isListen) {
         canva.addEventListener("mousedown", onMouseDown);
         canva.addEventListener("mouseup", onMouseUp);
         canva.addEventListener("mousemove", onMouseMove);
@@ -152,7 +153,7 @@ export function undo() {
     const ctx = canva.getContext("2d");
     if (step > 0) {
         step--;
-        ctx.clearRect(0, 0, canva.width, canva.height); 
+        ctx.clearRect(0, 0, canva.width, canva.height);
         ctx.drawImage(undoArray[step], 0, 0);
         console.log("step = " + step);
     }
@@ -168,4 +169,28 @@ export function redo() {
         ctx.drawImage(undoArray[step], 0, 0);
         console.log("step = " + step);
     }
+}
+
+export function uploadImage() {
+    const upload = document.getElementById("uploadFile");
+    upload.click();
+}
+
+function handleUpload(e) {
+    const canva = document.getElementById("paint");
+    const ctx = canva.getContext("2d");
+    const file = e.target.files[0];
+    console.log("upload")
+
+    var img = new Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, canva.width, canva.height);
+    }
+    var tmp = new Image();
+    tmp.src = canva.toDataURL();
+    undoArray.push(tmp);
+    step++;
+    console.log("upload step = " + step);
+    e.target.value = null;
 }

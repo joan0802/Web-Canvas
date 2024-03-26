@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import React from 'react';
-import { addText, resetCanva, readyToDraw, changeCursor, changeColor, downloadCanva, undo, redo } from './function';
+import { addText, resetCanva, changeCursor, changeColor, downloadCanva, undo, redo, uploadImage } from './function';
 import { SketchPicker } from 'react-color';
 
 function App() {
@@ -121,8 +121,9 @@ function App() {
                         <img onClick={() => resetCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/reset.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => console.log("hello")} className='hover:bg-sky-100 cursor-pointer' src='../public/upload.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => uploadImage()} id="uploadBtn" className='hover:bg-sky-100 cursor-pointer' src='../public/upload.png' width="80" height="80" alt="eraser"></img>
                     </div>
+                    <input type="file" id="uploadFile"></input>
                 </div>
             </div>
         </div>
