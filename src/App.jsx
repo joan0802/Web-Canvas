@@ -42,12 +42,12 @@ function App() {
 
             {/* Tools */}
             <div className='flex justify-center items-center h-5/6 gap-5'>
-                <div className='relative w-3/6 h-full'>
+                <div className='relative h-full'>
                         <canvas 
                             id='paint' 
-                            className="w-full h-5/6 flex bg-white border-8"
-                            width="600"
-                            height="500"
+                            className="flex bg-white border-8"
+                            width={600}
+                            height={480}
                         >
                         </canvas>
                     <div className='absolute bottom-0 left-0'>

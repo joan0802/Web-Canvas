@@ -43,9 +43,16 @@ export function changeCursor(type) {
     }
     else if (type == "circle") {
         canva.style.cursor = "url('circle32.png'), auto";
+        readyToDraw();
     }
-    else if (type == "rectangle")
+    else if (type == "rectangle") {
         canva.style.cursor = "url('rectangle32.png'), auto";
+        readyToDraw();
+    }
+    else if (type == "triangle") {
+        canva.style.cursor = "url('triangle32.png'), auto";
+        readyToDraw();
+    }
     else if (type == "text")
         canva.style.cursor = "text";
     else
@@ -85,14 +92,19 @@ export function resetCanva() {
 export function readyToDraw() {
     var canva = document.getElementById("paint");
     var ctx = canva.getContext("2d");
+    var startX, startY;
+    var tmpCanva;
 
     const onMouseDown = (e) => {
         isDrawing = true;
+        startX = e.offsetX - canva.offsetLeft;
+        startY = e.offsetY - canva.offsetTop;
+        tmpCanva = ctx.getImageData(0, 0, canva.width, canva.height);
     }
 
     const onMouseUp = (e) => {
         isDrawing = false;
-        ctx.stroke();
+        // ctx.stroke();
         ctx.beginPath();
         e.preventDefault();
 
@@ -108,20 +120,37 @@ export function readyToDraw() {
 
     const onMouseMove = (e) => {
         if (!isDrawing) return;
-
         const bSize = document.getElementById("brushSize").value;
-        // const rect = canva.getBoundingClientRect();
-        if (tool == "pencil") {
-            ctx.strokeStyle = pickedColor;
-            ctx.fillStyle = pickedColor;
-            ctx.lineWidth = bSize;
-            ctx.lineCap = "round";
-            ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop);
-            ctx.stroke();
-        }
-        else if (tool == "eraser") {
-            ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop, bSize * 1.3, bSize * 1.3);
 
+        switch (tool) {
+            case "pencil":
+                ctx.strokeStyle = pickedColor;
+                ctx.lineWidth = bSize;
+                ctx.lineCap = "round";
+                ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop);
+                ctx.stroke();
+                break;
+            case "eraser":
+                ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY, bSize * 1.3, bSize * 1.3);
+                break;
+            case "circle":
+                ctx.putImageData(tmpCanva, 0, 0);
+                ctx.beginPath();
+                var radius = Math.sqrt(Math.pow(e.offsetX - canva.offsetLeft - startX, 2) + Math.pow(e.offsetY - canva.offsetTop - startY, 2));
+                ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = pickedColor;
+                ctx.fill();
+                break;
+            case "rectangle":
+                ctx.putImageData(tmpCanva, 0, 0);
+                ctx.fillStyle = pickedColor;
+                ctx.fillRect(startX, startY, e.offsetX - canva.offsetLeft - startX, e.offsetY - canva.offsetTop - startY);
+                break;
+            case "triangle":
+                ctx.putImageData(tmpCanva, 0, 0);
+                break;
+            default:
+                break;
         }
     };
 
