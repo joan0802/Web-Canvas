@@ -6,16 +6,26 @@ import { SketchPicker } from 'react-color';
 
 function App() {
     const [pickedColor, setPickedColor] = useState('#000000');
+    const [theme, setTheme] = useState('dark');
     const [textHidden, setTextHidden] = useState(true);
     const [tool, setTool] = useState("auto");
 
+    const handleTheme = (theme) => {
+        setTheme(theme);
+        if(theme === 'dark') {
+            document.body.style.backgroundColor = "#56667A";
+        }
+        else {
+            document.body.style.backgroundColor = "#AFC2D5";
+        }
+    }
     const handleColorChange = (color) => {
         setPickedColor(color.hex);
         changeColor(color.hex);
     };
-    const handleText = (color) => {
+    const handleText = () => {
         changeCursor("text");
-        addText(color);
+        addText();
         setTool("text");
     }
     const handleDrawing = () => {
@@ -37,7 +47,7 @@ function App() {
 
         <div className="mr-20 ml-20 mb-20 h-screen overflow-auto">
             <div className='flex justify-center'>
-                <p className='yeseva-one-regular text-sky-100 flex items-center font-bold text-6xl mt-5 mb-5 rounded-lg'>Web Canva</p>
+                <p className={`yeseva-one-regular title ${theme} flex items-center font-bold text-6xl mt-5 mb-5 rounded-lg`}>Web Canva</p>
             </div>
 
             {/* Tools */}
@@ -45,7 +55,7 @@ function App() {
                 <div className='relative h-full'>
                         <canvas 
                             id='paint' 
-                            className="flex bg-white border-8"
+                            className={`border-8 ${theme} flex bg-white border-8`}
                             width={600}
                             height={480}
                         >
@@ -53,12 +63,16 @@ function App() {
                     <div className='absolute bottom-0 left-0'>
                         <img onClick={() => undo()} className="hover: cursor-pointer" width="80px" height="80px" src='undo.png' alt="undo"></img>
                     </div>
+                    <div className='flex jusify-center items-center absolute bottom-0 left-56 gap-6'>
+                        <img onClick={() => handleTheme('dark')} width="80px" height="80px" src='night-mode.png' className='hover: cursor-pointer'></img>
+                        <img onClick={() => handleTheme('light')} width="80px" height="80px" src='light-mode.png' className='hover: cursor-pointer'></img>
+                    </div>
                     <div className='absolute bottom-0 right-0'>
                         <img onClick={() => redo()} className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
                     </div>
                 </div>
 
-                <div className="border-8 bg-white w-2/6 h-full grid grid-cols-6">
+                <div className={`border-8 ${theme} bg-white w-2/6 h-full grid grid-cols-6`}>
                     <div id="colorPicker" className='ml-5 col-span-3 flex justify-center items-center'>
                         {/* <ColorSelect id="colorSelect" onColorChange={handleColorChange}/> */}
                         <SketchPicker
@@ -103,7 +117,7 @@ function App() {
                         </img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => handleText(pickedColor)} className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
+                        <img onClick={() => handleText()} id="textBtn" className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <div className='col-span-2 flex justify-center items-center'>
                         <img onClick={() => handleShape("circle")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
@@ -124,6 +138,7 @@ function App() {
                         <img onClick={() => uploadImage()} id="uploadBtn" className='hover:bg-sky-100 cursor-pointer' src='../public/upload.png' width="80" height="80" alt="eraser"></img>
                     </div>
                     <input type="file" id="uploadFile"></input>
+                    <input type="text" id="inputText" className='hidden'></input>
                 </div>
             </div>
         </div>

@@ -8,11 +8,26 @@
     height: 90vh !important;
 }
 
-.border-8 {
+.border-8.dark {
     position: relative;
-    border-width: 3px;
-    border-color: #c1cfeb;
+    border-width: 5px;
+    border-color: #EDDEA4;
     border-radius: 6px;
+}
+
+.border-8.light {
+    position: relative;
+    border-width: 5px;
+    border-color: #5C4742;
+    border-radius: 6px;
+}
+
+.title.dark {
+    color: #EDDEA4;
+}
+
+.title.light {
+    color: #5C4742;
 }
 
 .editable-box {

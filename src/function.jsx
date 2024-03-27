@@ -60,25 +60,6 @@ export function changeCursor(type) {
     console.log("tool = " + tool);
 }
 
-export function addText() {
-    // console.log("add text box");
-    const canva = document.getElementById("paint");
-    const ctx = canva.getContext("2d");
-    canva.style.cursor = "text";
-    canva.addEventListener("click", (e) => handleClick(e));
-    function handleClick(e) {
-        // console.log("click again");
-        const outer = document.getElementById("outer-canva");
-        canva.style.cursor = "auto";
-        const input = document.createElement("input");
-
-        ctx.fillStyle = pickedColor;
-        ctx.font = "bold 18px Arial";
-        ctx.fillText("Text", e.offsetX, e.offsetY);
-        canva.removeEventListener("click", handleClick);
-    }
-    canva.style.cursor = "text";
-}
 
 export function resetCanva() {
     const canva = document.getElementById("paint");
@@ -148,6 +129,13 @@ export function readyToDraw() {
                 break;
             case "triangle":
                 ctx.putImageData(tmpCanva, 0, 0);
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop);
+                ctx.lineTo(startX * 2 - e.offsetX + canva.offsetLeft, e.offsetY - canva.offsetTop);
+                ctx.lineTo(startX, startY);
+                ctx.fillStyle = pickedColor;
+                ctx.fill();
                 break;
             default:
                 break;
@@ -222,4 +210,34 @@ function handleUpload(e) {
     step++;
     console.log("upload step = " + step);
     e.target.value = null;
+}
+
+export function addText() {
+    const canva = document.getElementById("paint");
+    const ctx = canva.getContext("2d");
+    const inputText = document.createElement("input");
+
+    canva.addEventListener("click", (e) => handleClick(e));
+    function handleClick(e) {
+        inputText.style.position = "absolute";
+        inputText.style.left = e.offsetX;
+        inputText.style.top = e.offsetY;
+    }
+    canva.removeEventListener("click", handleClick);
+
+    // 将输入框添加到页面
+    document.body.appendChild(inputText);
+    inputText.focus();
+
+    // 添加输入框事件监听器
+    inputText.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            const text = inputText.value;
+            ctx.fillStyle = pickedColor;
+            ctx.font = "bold 18px Arial";
+            ctx.fillText(text, e.offsetX, e.offsetY); // 将输入的文字绘制到画布上
+            inputText.style.display = "none"; // 隐藏输入框
+            document.body.removeChild(inputText); // 从页面中移除输入框
+        }
+    });
 }
