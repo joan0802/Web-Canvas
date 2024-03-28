@@ -117,7 +117,7 @@ export function readyToDraw() {
                 ctx.stroke();
                 break;
             case "eraser":
-                ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY + 25, bSize * 1.3, bSize * 1.3);
+                ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY + 15, bSize * 1.3, bSize * 1.3);
                 break;
             case "circle":
                 ctx.putImageData(tmpCanva, 0, 0);
@@ -218,9 +218,14 @@ export function addText() {
     const canva = document.getElementById("paint");
     const ctx = canva.getContext("2d");
     const inputText = document.createElement("input");
+    var fontSize;
+    var fontType;
+    var posX, posY;
 
     canva.addEventListener("click", (e) => handleClick(e));
     function handleClick(e) {
+        posX = e.offsetX - canva.offsetLeft;
+        posY = e.offsetY;
         inputText.style.position = "absolute";
         inputText.style.left = e.clientX + "px";
         inputText.style.top = e.clientY + "px";
@@ -228,15 +233,18 @@ export function addText() {
         inputText.focus();
     }
     canva.removeEventListener("click", handleClick);
-
+    fontSize = document.getElementById("fontSize").value;
+    fontType = document.getElementById("fontType").value;
     inputText.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-            console.log("input text to canva");
+            console.log(inputText.value);
             ctx.fillStyle = pickedColor;
-            ctx.fillText(inputText.value, e.offsetX, e.offsetY);
+            ctx.font = `${fontSize}px ${fontType}`;
+            ctx.fillText(inputText.value, posX, posY);
             inputText.style.display = "none";
             document.body.removeChild(inputText);
+            canva.style.cursor = "auto";
+            addStep();
         }
     });
-    addStep();
 }

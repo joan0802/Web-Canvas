@@ -8,7 +8,6 @@ import { ToolButton } from './ToolButton';
 function App() {
     const [pickedColor, setPickedColor] = useState('#000000');
     const [theme, setTheme] = useState('dark');
-    const [tool, setTool] = useState("auto");
 
     const handleTheme = (theme) => {
         setTheme(theme);
@@ -83,12 +82,12 @@ function App() {
                         <p className='yeseva-one-regular text-lg font-bold'>Font Size:</p>
                         <form className="max-w-sm">
                             <select id="fontSize" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
-                                <option defaultValue="8">8</option>
-                                <option value="10">10</option>
-                                <option value="12">12</option>
-                                <option value="16">16</option>
+                                <option value="8">8</option>
+                                <option defaultValue="16">16</option>
                                 <option value="20">20</option>
-                                <option value="24">24</option>
+                                <option value="28">28</option>
+                                <option value="36">36</option>
+                                <option value="54">54</option>
                             </select>
                         </form>
                         <p className='yeseva-one-regular text-lg font-bold'>Font Type:</p>
