@@ -3,11 +3,11 @@ import './App.css';
 import React from 'react';
 import { addText, resetCanva, changeCursor, changeColor, downloadCanva, undo, redo, uploadImage } from './function';
 import { SketchPicker } from 'react-color';
+import { ToolButton } from './ToolButton';
 
 function App() {
     const [pickedColor, setPickedColor] = useState('#000000');
     const [theme, setTheme] = useState('dark');
-    const [textHidden, setTextHidden] = useState(true);
     const [tool, setTool] = useState("auto");
 
     const handleTheme = (theme) => {
@@ -26,20 +26,16 @@ function App() {
     const handleText = () => {
         changeCursor("text");
         addText();
-        setTool("text");
     }
     const handleDrawing = () => {
         // document.getElementById("paint").style.cursor = "url('pencil.cur'), auto";
         changeCursor("pencil");
-        setTool("pencil");
     }
     const handleErasing = () => {
         changeCursor("eraser");
-        setTool("eraser");
     }
     const handleShape= (shape) => {
         changeCursor(shape);
-        setTool(shape);
     }
 
 
@@ -107,38 +103,16 @@ function App() {
                         <p className='yeseva-one-regular text-lg font-bold'>Brush Size:</p>
                         <input id="brushSize" type='range' min="1" max="50" defaultValue="5" className='bg-black'></input>
                     </div>
-
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => {handleDrawing(pickedColor);}} className='hover:bg-sky-100 cursor-pointer' src='../public/pencil.png' width="80" height="80" alt="eraser">
-                        </img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => handleErasing()} className='hover:bg-sky-100 cursor-pointer' src='../public/eraser.png' width="80" height="80" alt="eraser">
-                        </img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => handleText()} id="textBtn" className='hover:bg-sky-100 cursor-pointer' src='../public/text.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => handleShape("circle")} className='hover:bg-sky-100 cursor-pointer' src='../public/circle.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => handleShape("rectangle")} className='hover:bg-sky-100 cursor-pointer' src='../public/rectangle.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => handleShape("triangle")} className='hover:bg-sky-100 cursor-pointer' src='../public/triangle.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => downloadCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/download.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => resetCanva()} className='hover:bg-sky-100 cursor-pointer' src='../public/reset.png' width="80" height="80" alt="eraser"></img>
-                    </div>
-                    <div className='col-span-2 flex justify-center items-center'>
-                        <img onClick={() => uploadImage()} id="uploadBtn" className='hover:bg-sky-100 cursor-pointer' src='../public/upload.png' width="80" height="80" alt="eraser"></img>
-                    </div>
+                    <ToolButton func={handleDrawing} img={'../public/pencil.png'}/>
+                    <ToolButton func={handleErasing} img={'../public/eraser.png'}/>
+                    <ToolButton func={handleText} img={'../public/text.png'}/>
+                    <ToolButton func={() => handleShape("circle")} img={'../public/circle.png'}/>
+                    <ToolButton func={() => handleShape("rectangle")} img={'../public/rectangle.png'}/>
+                    <ToolButton func={() => handleShape("triangle")} img={'../public/triangle.png'}/>
+                    <ToolButton func={downloadCanva} img={'../public/download.png'}/>
+                    <ToolButton func={resetCanva} img={'../public/reset.png'}/>
+                    <ToolButton func={uploadImage} img={'../public/upload.png'}/>
                     <input type="file" id="uploadFile"></input>
-                    <input type="text" id="inputText" className='hidden'></input>
                 </div>
             </div>
         </div>

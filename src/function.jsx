@@ -24,6 +24,14 @@ function initApp() {
     console.log("init step = " + step);
 }
 
+function addStep() {
+    const canva = document.getElementById("paint");
+    var img = new Image();
+    img.src = canva.toDataURL();
+    undoArray.push(img);
+    step++;
+}
+
 export function changeColor(color) {
     pickedColor = color;
 }
@@ -92,10 +100,7 @@ export function readyToDraw() {
         while (step < undoArray.length - 1) {
             undoArray.pop();
         }
-        var img = new Image();
-        img.src = canva.toDataURL();
-        undoArray.push(img);
-        step++;
+        addStep();
         console.log("canva step = " + step);
     };
 
@@ -108,11 +113,11 @@ export function readyToDraw() {
                 ctx.strokeStyle = pickedColor;
                 ctx.lineWidth = bSize;
                 ctx.lineCap = "round";
-                ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop);
+                ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop + 25);
                 ctx.stroke();
                 break;
             case "eraser":
-                ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY, bSize * 1.3, bSize * 1.3);
+                ctx.clearRect(e.offsetX - canva.offsetLeft, e.offsetY + 25, bSize * 1.3, bSize * 1.3);
                 break;
             case "circle":
                 ctx.putImageData(tmpCanva, 0, 0);
@@ -204,10 +209,7 @@ function handleUpload(e) {
     img.onload = () => {
         ctx.drawImage(img, 0, 0, canva.width, canva.height);
     }
-    var tmp = new Image();
-    tmp.src = canva.toDataURL();
-    undoArray.push(tmp);
-    step++;
+    addStep();
     console.log("upload step = " + step);
     e.target.value = null;
 }
@@ -220,24 +222,21 @@ export function addText() {
     canva.addEventListener("click", (e) => handleClick(e));
     function handleClick(e) {
         inputText.style.position = "absolute";
-        inputText.style.left = e.offsetX;
-        inputText.style.top = e.offsetY;
+        inputText.style.left = e.clientX + "px";
+        inputText.style.top = e.clientY + "px";
+        document.body.appendChild(inputText);
+        inputText.focus();
     }
     canva.removeEventListener("click", handleClick);
 
-    // 将输入框添加到页面
-    document.body.appendChild(inputText);
-    inputText.focus();
-
-    // 添加输入框事件监听器
     inputText.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-            const text = inputText.value;
+            console.log("input text to canva");
             ctx.fillStyle = pickedColor;
-            ctx.font = "bold 18px Arial";
-            ctx.fillText(text, e.offsetX, e.offsetY); // 将输入的文字绘制到画布上
-            inputText.style.display = "none"; // 隐藏输入框
-            document.body.removeChild(inputText); // 从页面中移除输入框
+            ctx.fillText(inputText.value, e.offsetX, e.offsetY);
+            inputText.style.display = "none";
+            document.body.removeChild(inputText);
         }
     });
+    addStep();
 }
