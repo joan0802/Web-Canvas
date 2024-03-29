@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import React from 'react';
-import { addText, resetCanva, changeCursor, changeColor, downloadCanva, undo, redo, uploadImage } from './function';
+import { addText, resetCanva, changeCursor, changeColor, downloadCanva, undo, redo, uploadImage} from './function';
 import { SketchPicker } from 'react-color';
 import { ToolButton } from './ToolButton';
 
@@ -11,7 +11,7 @@ function App() {
 
     const handleTheme = (theme) => {
         setTheme(theme);
-        if(theme === 'dark') {
+        if (theme === 'dark') {
             document.body.style.backgroundColor = "#56667A";
         }
         else {
@@ -33,14 +33,14 @@ function App() {
     const handleErasing = () => {
         changeCursor("eraser");
     }
-    const handleShape= (shape) => {
+    const handleShape = (shape) => {
         changeCursor(shape);
     }
 
 
     return (
 
-        <div className="mr-20 ml-20 mb-20 h-screen overflow-auto">
+        <div className="mr-20 ml-20 my-3 h-screen overflow-auto">
             <div className='flex justify-center'>
                 <p className={`yeseva-one-regular title ${theme} flex items-center font-bold text-6xl mt-5 mb-5 rounded-lg`}>Web Canva</p>
             </div>
@@ -48,19 +48,20 @@ function App() {
             {/* Tools */}
             <div className='flex justify-center items-center h-5/6 gap-5'>
                 <div className='relative h-full'>
-                        <canvas 
-                            id='paint' 
-                            className={`border-8 ${theme} flex bg-white border-8`}
-                            width={600}
-                            height={480}
-                        >
-                        </canvas>
+                    <canvas
+                        id='paint'
+                        className={`border-8 ${theme} flex bg-white border-8`}
+                        width={600}
+                        height={480}
+                    >
+                    </canvas>
                     <div className='absolute bottom-0 left-0'>
                         <img onClick={() => undo()} className="hover: cursor-pointer" width="80px" height="80px" src='undo.png' alt="undo"></img>
                     </div>
-                    <div className='flex jusify-center items-center absolute bottom-0 left-56 gap-6'>
+                    <div className='flex jusify-center items-center absolute bottom-0 left-40 gap-6'>
                         <img onClick={() => handleTheme('dark')} width="80px" height="80px" src='night-mode.png' className='hover: cursor-pointer'></img>
                         <img onClick={() => handleTheme('light')} width="80px" height="80px" src='light-mode.png' className='hover: cursor-pointer'></img>
+                        <img onClick={() => changeCursor("painter")} width={80} height={80} src="paint-bucket.png" className='hover: cursor-pointer'/>
                     </div>
                     <div className='absolute bottom-0 right-0'>
                         <img onClick={() => redo()} className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
@@ -78,7 +79,7 @@ function App() {
                         />
                     </div>
 
-                    <div className='col-span-3 flex flex-col justify-center gap-2 mx-10 my-5 rounded-md'>
+                    <div className='col-span-3 flex flex-col justify-center gap-2 mx-10 mt-2 rounded-md'>
                         <p className='yeseva-one-regular text-lg font-bold'>Font Size:</p>
                         <form className="max-w-sm">
                             <select id="fontSize" className="bg-sky-900 text-white text-sm rounded-md block w-full p-1.5">
@@ -101,16 +102,20 @@ function App() {
                         </form>
                         <p className='yeseva-one-regular text-lg font-bold'>Brush Size:</p>
                         <input id="brushSize" type='range' min="1" max="50" defaultValue="5" className='bg-black'></input>
+                        <div className='flex gap-4 space-between'>
+                            <p className='yeseva-one-regular text-lg font-bold'>Fill Shape:</p>
+                            <input id="fillShape" type='checkbox' defaultValue="" className=''></input>
+                        </div>
                     </div>
-                    <ToolButton func={handleDrawing} img={'../public/pencil.png'}/>
-                    <ToolButton func={handleErasing} img={'../public/eraser.png'}/>
-                    <ToolButton func={handleText} img={'../public/text.png'}/>
-                    <ToolButton func={() => handleShape("circle")} img={'../public/circle.png'}/>
-                    <ToolButton func={() => handleShape("rectangle")} img={'../public/rectangle.png'}/>
-                    <ToolButton func={() => handleShape("triangle")} img={'../public/triangle.png'}/>
-                    <ToolButton func={downloadCanva} img={'../public/download.png'}/>
-                    <ToolButton func={resetCanva} img={'../public/reset.png'}/>
-                    <ToolButton func={uploadImage} img={'../public/upload.png'}/>
+                    <ToolButton func={handleDrawing} img={'../public/pencil.png'} />
+                    <ToolButton func={handleErasing} img={'../public/eraser.png'} />
+                    <ToolButton func={handleText} img={'../public/text.png'} />
+                    <ToolButton func={() => handleShape("circle")} img={'../public/circle.png'} />
+                    <ToolButton func={() => handleShape("rectangle")} img={'../public/rectangle.png'} />
+                    <ToolButton func={() => handleShape("triangle")} img={'../public/triangle.png'} />
+                    <ToolButton func={downloadCanva} img={'../public/download.png'} />
+                    <ToolButton func={resetCanva} img={'../public/reset.png'} />
+                    <ToolButton func={uploadImage} img={'../public/upload.png'} />
                     <input type="file" id="uploadFile"></input>
                 </div>
             </div>

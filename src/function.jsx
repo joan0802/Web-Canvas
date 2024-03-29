@@ -61,6 +61,10 @@ export function changeCursor(type) {
         canva.style.cursor = "url('triangle32.png'), auto";
         readyToDraw();
     }
+    else if (type == "painter") {
+        canva.style.cursor = "url('painter-bucket32.png'), auto";
+        readyToDraw();
+    }
     else if (type == "text")
         canva.style.cursor = "text";
     else
@@ -74,6 +78,7 @@ export function resetCanva() {
     const ctx = canva.getContext("2d");
     ctx.clearRect(0, 0, canva.width, canva.height);
     canva.innerHTML = "";
+    canva.style.backgroundColor = "white";
     initApp();
     console.log("reset");
 }
@@ -89,6 +94,11 @@ export function readyToDraw() {
         startX = e.offsetX - canva.offsetLeft;
         startY = e.offsetY - canva.offsetTop;
         tmpCanva = ctx.getImageData(0, 0, canva.width, canva.height);
+        if(tool == "painter") {
+            ctx.fillStyle = pickedColor;
+            ctx.fillRect(0, 0, canva.width, canva.height);
+            addStep();
+        }
     }
 
     const onMouseUp = (e) => {
@@ -107,11 +117,13 @@ export function readyToDraw() {
     const onMouseMove = (e) => {
         if (!isDrawing) return;
         const bSize = document.getElementById("brushSize").value;
+        const isFilled = document.getElementById("fillShape").checked;
+        ctx.strokeStyle = pickedColor;
+        ctx.lineWidth = bSize;
+        ctx.fillStyle = pickedColor;
 
         switch (tool) {
             case "pencil":
-                ctx.strokeStyle = pickedColor;
-                ctx.lineWidth = bSize;
                 ctx.lineCap = "round";
                 ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop + 25);
                 ctx.stroke();
@@ -125,22 +137,31 @@ export function readyToDraw() {
                 var radius = Math.sqrt(Math.pow(e.offsetX - canva.offsetLeft - startX, 2) + Math.pow(e.offsetY - canva.offsetTop - startY, 2));
                 ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
                 ctx.fillStyle = pickedColor;
-                ctx.fill();
+                if(isFilled) 
+                    ctx.fill();
+                else 
+                    ctx.stroke();
                 break;
             case "rectangle":
                 ctx.putImageData(tmpCanva, 0, 0);
-                ctx.fillStyle = pickedColor;
-                ctx.fillRect(startX, startY, e.offsetX - canva.offsetLeft - startX, e.offsetY - canva.offsetTop - startY);
+                if(isFilled) 
+                    ctx.fillRect(startX, startY, e.offsetX - canva.offsetLeft - startX, e.offsetY - canva.offsetTop - startY);
+                else
+                    ctx.strokeRect(startX, startY, e.offsetX - canva.offsetLeft - startX, e.offsetY - canva.offsetTop - startY);
                 break;
             case "triangle":
                 ctx.putImageData(tmpCanva, 0, 0);
                 ctx.beginPath();
+                ctx.lineCap = "round";
                 ctx.moveTo(startX, startY);
                 ctx.lineTo(e.offsetX - canva.offsetLeft, e.offsetY - canva.offsetTop);
                 ctx.lineTo(startX * 2 - e.offsetX + canva.offsetLeft, e.offsetY - canva.offsetTop);
                 ctx.lineTo(startX, startY);
                 ctx.fillStyle = pickedColor;
-                ctx.fill();
+                if(isFilled) 
+                    ctx.fill();
+                else 
+                    ctx.stroke();
                 break;
             default:
                 break;
