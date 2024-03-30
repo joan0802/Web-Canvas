@@ -62,7 +62,7 @@ export function changeCursor(type) {
         readyToDraw();
     }
     else if (type == "painter") {
-        canva.style.cursor = "url('painter-bucket32.png'), auto";
+        canva.style.cursor = "url('paint-bucket32.png'), auto";
         readyToDraw();
     }
     else if (type == "text")
