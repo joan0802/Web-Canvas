@@ -64,7 +64,7 @@ function App() {
                         <img onClick={() => changeCursor("painter")} width={80} height={80} src="paint-bucket.png" className='hover: cursor-pointer'/>
                     </div>
                     <div className='absolute bottom-0 right-0'>
-                        <img onClick={() => redo()} className='hover: cursor-pointer' width="80px" height="80px" src='../public/redo.png' alt="redo"></img>
+                        <img onClick={() => redo()} className='hover: cursor-pointer' width="80px" height="80px" src='redo.png' alt="redo"></img>
                     </div>
                 </div>
 
@@ -107,15 +107,15 @@ function App() {
                             <input id="fillShape" type='checkbox' defaultValue="" className=''></input>
                         </div>
                     </div>
-                    <ToolButton func={handleDrawing} img={'../public/pencil.png'} />
-                    <ToolButton func={handleErasing} img={'../public/eraser.png'} />
-                    <ToolButton func={handleText} img={'../public/text.png'} />
-                    <ToolButton func={() => handleShape("circle")} img={'../public/circle.png'} />
-                    <ToolButton func={() => handleShape("rectangle")} img={'../public/rectangle.png'} />
-                    <ToolButton func={() => handleShape("triangle")} img={'../public/triangle.png'} />
-                    <ToolButton func={downloadCanva} img={'../public/download.png'} />
-                    <ToolButton func={resetCanva} img={'../public/reset.png'} />
-                    <ToolButton func={uploadImage} img={'../public/upload.png'} />
+                    <ToolButton func={handleDrawing} img={'pencil.png'} />
+                    <ToolButton func={handleErasing} img={'eraser.png'} />
+                    <ToolButton func={handleText} img={'text.png'} />
+                    <ToolButton func={() => handleShape("circle")} img={'circle.png'} />
+                    <ToolButton func={() => handleShape("rectangle")} img={'rectangle.png'} />
+                    <ToolButton func={() => handleShape("triangle")} img={'triangle.png'} />
+                    <ToolButton func={downloadCanva} img={'download.png'} />
+                    <ToolButton func={resetCanva} img={'reset.png'} />
+                    <ToolButton func={uploadImage} img={'upload.png'} />
                     <input type="file" id="uploadFile"></input>
                 </div>
             </div>
