@@ -110,7 +110,8 @@ export function readyToDraw() {
         while (step < undoArray.length - 1) {
             undoArray.pop();
         }
-        addStep();
+        if(tool != "painter" && tool != "text")
+            addStep();
         console.log("canva step = " + step);
     };
 
