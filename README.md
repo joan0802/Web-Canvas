@@ -99,9 +99,3 @@ Web-Canva supports various functions:
 
     
 https://web-canva-477a9.web.app/
-
-<style>
-table th{
-    width: 100%;
-}
-</style>
