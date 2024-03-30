@@ -76,12 +76,13 @@ Web-Canva supports various functions:
 ### Bonus Function description
 
 
-   ![](https://i.imgur.com/ZienN65.png) 
    - **Fill shape check box**
      - Fills brush shapes with the selected color when this box is checked.
 
         ![](https://i.imgur.com/0NUT27J.png)
             ![](https://i.imgur.com/PGbDuc1.png)
+            
+![](https://i.imgur.com/ZienN65.png) 
    - **Dark mode (left) & Light mode (middle)**
      - Users can change the theme by pressing these two buttons.
      - Dark mode is default, of course.
