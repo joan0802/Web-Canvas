@@ -56,15 +56,15 @@ function App() {
                     >
                     </canvas>
                     <div className='absolute bottom-0 left-0'>
-                        <img onClick={() => undo()} className="hover: cursor-pointer" width="80px" height="80px" src='undo.png' alt="undo"></img>
+                        <img onClick={() => undo()} className="hover: cursor-pointer" width={80} height={80} src='undo.png' alt="undo"></img>
                     </div>
                     <div className='flex jusify-center items-center absolute bottom-0 left-40 gap-6'>
-                        <img onClick={() => handleTheme('dark')} width="80px" height="80px" src='night-mode.png' className='hover: cursor-pointer'></img>
-                        <img onClick={() => handleTheme('light')} width="80px" height="80px" src='light-mode.png' className='hover: cursor-pointer'></img>
+                        <img onClick={() => handleTheme('dark')} width={80} height={80} src='night-mode.png' className='hover: cursor-pointer'></img>
+                        <img onClick={() => handleTheme('light')} width={80} height={80} src='light-mode.png' className='hover: cursor-pointer'></img>
                         <img onClick={() => changeCursor("painter")} width={80} height={80} src="paint-bucket.png" className='hover: cursor-pointer'/>
                     </div>
                     <div className='absolute bottom-0 right-0'>
-                        <img onClick={() => redo()} className='hover: cursor-pointer' width="80px" height="80px" src='redo.png' alt="redo"></img>
+                        <img onClick={() => redo()} className='hover: cursor-pointer' width={80} height={80} src='redo.png' alt="redo"></img>
                     </div>
                 </div>
 

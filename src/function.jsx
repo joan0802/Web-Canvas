@@ -232,7 +232,7 @@ function handleUpload(e) {
         ctx.drawImage(img, 0, 0, canva.width, canva.height);
     }
     addStep();
-    console.log("upload step = " + step);
+    // console.log("upload step = " + step);
     e.target.value = null;
 }
 
@@ -249,15 +249,17 @@ export function addText() {
         posX = e.offsetX - canva.offsetLeft;
         posY = e.offsetY;
         inputText.style.position = "absolute";
-        inputText.style.left = e.clientX + "px";
-        inputText.style.top = e.clientY + "px";
+        inputText.style.left = `${e.clientX}` + "px";
+        inputText.style.top = `${e.clientY}` + "px";
         document.body.appendChild(inputText);
         inputText.focus();
     }
+
     canva.removeEventListener("click", handleClick);
     fontSize = document.getElementById("fontSize").value;
     fontType = document.getElementById("fontType").value;
-    inputText.addEventListener("keypress", function (e) {
+    
+    inputText.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
             console.log(inputText.value);
             ctx.fillStyle = pickedColor;
