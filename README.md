@@ -30,7 +30,15 @@
 ### How to execute
   1. Ensure that Node.js is installed on your computer.
   2. Type the following code in you terminal
-`npm run dev`
+ 
+```npm install```
+
+You will see that,
+![](https://i.imgur.com/vFkMzoW.png)
+
+3. Then run the following code,
+
+```npm run dev```
 
 You will see the following URL, click it to use the web-canva
 ![](https://i.imgur.com/ldsN1FG.png)
