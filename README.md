@@ -27,6 +27,11 @@
 
 ---
 
+### How to execute
+  1. Ensure that Node.js is installed on your computer.
+  2. Type the following code in you terminal
+`npm run dev`
+
 ### How to use 
 
 ![](https://i.imgur.com/S464MdD.png)
