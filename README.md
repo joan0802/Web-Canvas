@@ -32,6 +32,9 @@
   2. Type the following code in you terminal
 `npm run dev`
 
+You will see the following URL, click it to use the web-canva
+![](https://i.imgur.com/ldsN1FG.png)
+
 ### How to use 
 
 ![](https://i.imgur.com/S464MdD.png)
